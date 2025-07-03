@@ -1,0 +1,39 @@
+body {
+  font-family: sans-serif;
+  background-color: #f0f0f0;
+  text-align: center;
+}
+h1 {
+  color: #333;
+}
+a {
+  text-decoration: none;
+  color: blue;
+}
+
+ul{
+    list-style-type: none;
+    padding : 0;
+    margin : 10% 0 0 0;
+}
+
+ul li{
+    margin-bottom : 15px;
+}
+
+ul li a {
+    color : black;
+    font-weight: bold;
+    text-decoration: none;
+    transition: all 0.2s;
+    font-size : 110%;
+}
+
+ul li a:hover{
+    color : gray;
+    text-decoration: underline;
+}
+
+li.spaced{
+    margin-top :5%;
+}

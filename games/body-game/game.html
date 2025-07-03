@@ -1,0 +1,145 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>몸으로 말해요 - 게임</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      background-color: #f8f8f8;
+      padding: 50px;
+    }
+    h1 {
+      font-size: 36px;
+      margin-bottom: 20px;
+    }
+    #category-title {
+      font-size: 28px;
+      margin-bottom: 30px;
+    }
+    #question {
+      font-size: 48px;
+      margin: 30px 0;
+      background: white;
+      display: inline-block;
+      padding: 40px 60px;
+      border-radius: 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .buttons {
+      margin-top: 20px;
+    }
+    .buttons button {
+      padding: 14px 28px;
+      font-size: 18px;
+      margin: 10px;
+      cursor: pointer;
+      border-radius: 10px;
+      border: none;
+      background-color: #4CAF50;
+      color: white;
+      transition: background-color 0.2s;
+    }
+    .buttons button:hover {
+      background-color: #45a049;
+    }
+    #timer {
+      font-size: 24px;
+      margin-top: 20px;
+      color: #333;
+    }
+    #home-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 10px 16px;
+      background-color: #eee;
+      color: black;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 16px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    #home-btn:hover {
+      background-color: #ccc;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>몸으로 말해요 🎭</h1>
+  <div id="category-title"></div>
+  <div id="question">카테고리를 불러오는 중...</div>
+
+  <div class="buttons">
+    <button onclick="nextQuestion()">다음 문제</button>
+    <button onclick="startTimer()">⏱ 시작</button>
+    <button onclick="stopTimer()">🛑 종료</button>
+    <button onclick="resetTimer()">🔁 초기화</button>
+  </div>
+
+  <div id="timer">⏱ 00:00</div>
+
+  <a id="home-btn" href="../../index.html">🏠 홈으로</a>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const category = urlParams.get('category');
+    let questionList = [];
+    let usedIndexes = [];
+    let timer = null;
+    let time = 0;
+
+    document.getElementById("category-title").innerText = `분야: ${category}`;
+
+    fetch("body_game_questions.json")
+      .then(res => res.json())
+      .then(data => {
+        if (data[category]) {
+          questionList = [...data[category]];
+          nextQuestion();
+        } else {
+          document.getElementById("question").innerText = "유효하지 않은 카테고리입니다.";
+        }
+      });
+
+    function nextQuestion() {
+      if (usedIndexes.length === questionList.length) {
+        document.getElementById("question").innerText = "🎉 모든 문제가 끝났습니다!";
+        stopTimer();
+        return;
+      }
+
+      let index;
+      do {
+        index = Math.floor(Math.random() * questionList.length);
+      } while (usedIndexes.includes(index));
+
+      usedIndexes.push(index);
+      document.getElementById("question").innerText = questionList[index];
+    }
+
+    function startTimer() {
+      if (timer) return;
+      timer = setInterval(() => {
+        time++;
+        document.getElementById("timer").innerText = `⏱ ${String(Math.floor(time/60)).padStart(2, '0')}:${String(time%60).padStart(2, '0')}`;
+      }, 1000);
+    }
+
+    function stopTimer() {
+      clearInterval(timer);
+      timer = null;
+    }
+
+    function resetTimer() {
+      stopTimer();
+      time = 0;
+      document.getElementById("timer").innerText = "⏱ 00:00";
+    }
+  </script>
+
+</body>
+</html>

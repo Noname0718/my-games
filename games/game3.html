@@ -1,0 +1,98 @@
+<!-- games/person.html -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>인물 맞추기 게임</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      padding: 50px;
+      background-color: #f0f0f0;
+    }
+    .game-box {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      display: inline-block;
+    }
+    img {
+      width: 300px;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      margin: 10px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    #answer {
+      margin-top: 15px;
+      font-size: 30px;
+      font-weight: bold;
+      color: darkblue;
+    }
+    #home-btn {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        padding: 10px 16px;
+        background-color: #eee;
+        color: black;
+        text-decoration: none;
+        border-radius: 8px;
+        font-size: 16px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        transition: background-color 0.2s;
+    }
+
+    #home-btn:hover {
+        background-color: #ccc;
+    }
+
+  </style>
+</head>
+<body>
+  <h1>🧠 인물 맞추기 게임</h1>
+  <div class="game-box">
+    <img id="person-img" src="images/person1.jpg" alt="인물 이미지">
+    <div>
+      <button onclick="showAnswer()">정답 보기</button>
+      <button onclick="nextQuestion()">다음 문제</button>
+    </div>
+    <div id="answer"></div>
+  </div>
+  <a id="home-btn" href="../index.html">🏠 홈으로</a>
+  <script>
+    const people = [
+      { img: "images/person1.jpg", name: "지민" },
+      { img: "images/person2.jpg", name: "손흥민" },
+      { img: "images/person3.jpg", name: "백종원" },
+      { img: "images/person4.jpg", name: "유재석" },
+      { img: "images/person5.jpg", name: "아이유" }
+    ];
+
+    let currentIndex = -1;
+
+    function nextQuestion() {
+      const random = Math.floor(Math.random() * people.length);
+      currentIndex = random;
+      document.getElementById("person-img").src = people[random].img;
+      document.getElementById("answer").innerText = "";
+    }
+
+    function showAnswer() {
+      if (currentIndex >= 0) {
+        document.getElementById("answer").innerText = `정답: ${people[currentIndex].name}`;
+      }
+    }
+
+    // 첫 문제 자동 시작
+    window.onload = nextQuestion;
+  </script>
+</body>
+</html>

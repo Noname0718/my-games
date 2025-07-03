@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>랜덤 구구단 퀴즈</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      padding: 5vh 5vw;
+      margin: 0;
+    }
+
+    #score {
+      position: fixed;
+      top: 1vh;
+      right: 2vw;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: green;
+    }
+
+    #quiz {
+      font-size: 12vw;
+      margin: 6vh 0 2vh;
+      height: 15vh;
+    }
+
+    #timer {
+      font-size: 8vw;
+      margin-bottom: 4vh;
+      color: red;
+    }
+
+    button {
+      font-size: 5vw;
+      margin: 1vh 2vw;
+      padding: 1.5vh 3vw;
+      border-radius: 1rem;
+      border: none;
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    #home-btn {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        padding: 10px 16px;
+        background-color: #eee;
+        color: black;
+        text-decoration: none;
+        border-radius: 8px;
+        font-size: 16px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        transition: background-color 0.2s;
+    }
+
+    #home-btn:hover {
+        background-color: #ccc;
+    }
+    @media (min-width: 600px) {
+      #quiz {
+        font-size: 48px;
+      }
+      #timer {
+        font-size: 36px;
+      }
+      button {
+        font-size: 20px;
+      }
+      #score {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="score">점수: 0</div>
+  <div id="quiz">?? x ??</div>
+  <div id="timer">3</div>
+  <button onclick="startQuiz()">시작</button>
+  <button onclick="passQuiz()">통과</button>
+  <button onclick="pauseQuiz()">일시정지</button>
+  <a id="home-btn" href="../index.html">🏠 홈으로</a>
+
+  <script>
+    let timer = 3;
+    let interval = null;
+    let isPaused = false;
+    let isRunning = false;
+    let score = 0;
+
+    function generateQuiz() {
+      const dan = Math.floor(Math.random() * 8) + 2; // 2~9
+      const num = Math.floor(Math.random() * 9) + 1; // 1~9
+      document.getElementById("quiz").textContent = `${dan} x ${num}`;
+    }
+
+    function updateTimerDisplay() {
+      document.getElementById("timer").textContent = timer;
+    }
+
+    function updateScoreDisplay() {
+      document.getElementById("score").textContent = `점수: ${score}`;
+    }
+
+    function clearQuiz() {
+      document.getElementById("quiz").textContent = "?? x ??";
+    }
+
+    function startCountdown() {
+      clearInterval(interval);
+      timer = 3;
+      updateTimerDisplay();
+      isRunning = true;
+
+      interval = setInterval(() => {
+        if (!isPaused && isRunning) {
+          timer--;
+          updateTimerDisplay();
+          if (timer <= 0) {
+            clearInterval(interval);
+            isRunning = false;
+            clearQuiz();
+          }
+        }
+      }, 1000);
+    }
+
+    function startQuiz() {
+      isPaused = false;
+      generateQuiz();
+      startCountdown();
+    }
+
+    function passQuiz() {
+      if (!isRunning) return;
+      score++;
+      updateScoreDisplay();
+      generateQuiz();
+      startCountdown();
+    }
+
+    function pauseQuiz() {
+      isPaused = !isPaused;
+    }
+  </script>
+</body>
+</html>

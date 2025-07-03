@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>돌림판 룰렛</title>
+  <style>
+    body { font-family: sans-serif; text-align: center; background: #f0f0f0; padding: 40px; }
+    canvas { margin: 20px auto; display: block; background: white; border-radius: 50%; }
+    #controls { margin-bottom: 20px; }
+    input[type="text"] {
+      font-size: 16px; padding: 6px; margin: 4px; width: 300px;
+    }
+    #spin-btn, #reset-btn {
+      font-size: 18px; padding: 10px 20px; margin: 10px;
+      background: #4CAF50; color: white; border: none; border-radius: 6px; cursor: pointer;
+    }
+    #spin-btn:hover, #reset-btn:hover { background: #388E3C; }
+    #result {
+      font-size: 28px;
+      margin-top: 25px;
+      font-weight: bold;
+    }
+    #home-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 10px 16px;
+      background-color: #eee;
+      color: black;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 16px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    #home-btn:hover { background-color: #ccc; }
+  </style>
+</head>
+<body>
+
+  <h1>🎯 돌려돌려 돌림판</h1>
+
+  <div id="controls">
+    <input type="text" id="items" placeholder="쉼표로 항목 입력 (예: 사과, 배, 포도)">
+    <button onclick="setItems()">항목 설정</button>
+  </div>
+
+  <canvas id="wheel" width="400" height="400"></canvas>
+  <button id="spin-btn" onclick="spin()">돌리기</button>
+  <button id="reset-btn" onclick="resetWheel()">초기화</button>
+  <div id="result"></div>
+  <a id="home-btn" href="../index.html">🏠 홈으로</a>
+
+  <script>
+    const canvas = document.getElementById("wheel");
+    const ctx = canvas.getContext("2d");
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2;
+    const radius = 180;
+
+    let items = ["1", "2", "3", "4", "5", "6"];
+    let rotation = 0;
+    let speed = 0;
+    let isSpinning = false;
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    function drawArrow() {
+      ctx.beginPath();
+      ctx.moveTo(centerX, centerY - radius - 0);  // 꼭대기
+      ctx.lineTo(centerX - 10, centerY - radius - 20);
+      ctx.lineTo(centerX + 10, centerY - radius - 20);
+      ctx.closePath();
+      ctx.fillStyle = "#e91e63";
+      ctx.fill();
+    }
+
+    function drawWheel() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const anglePer = 2 * Math.PI / items.length;
+
+      for (let i = 0; i < items.length; i++) {
+        const start = rotation + i * anglePer;
+        const end = start + anglePer;
+        const colors = ["#ffe082", "#ffcc80", "#f8bbd0"];
+
+        ctx.beginPath();
+        ctx.moveTo(centerX, centerY);
+        ctx.arc(centerX, centerY, radius, start, end);
+        ctx.fillStyle = colors[i%3];
+        ctx.fill();
+
+        ctx.save();
+        ctx.translate(centerX, centerY);
+        ctx.rotate(start + anglePer / 2);
+        ctx.textAlign = "right";
+        ctx.fillStyle = "#000";
+        ctx.font = "bold 16px sans-serif";
+        ctx.fillText(items[i], radius - 10, 0);
+        ctx.restore();
+      }
+
+      // 중심 원
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, 30, 0, 2 * Math.PI);
+      ctx.fillStyle = "#fff";
+      ctx.fill();
+
+      drawArrow();
+    }
+
+    function setItems() {
+      const input = document.getElementById("items").value;
+      const arr = input.split(",").map(v => v.trim()).filter(v => v);
+      if (arr.length < 2) {
+        alert("항목을 2개 이상 입력하세요.");
+        return;
+      }
+      shuffle(arr);
+      items = arr;
+      rotation = 0;
+      drawWheel();
+      document.getElementById("result").innerText = "";
+    }
+
+    function spin() {
+      if (isSpinning) return;
+      isSpinning = true;
+      speed = Math.random() * 0.3 + 0.3;
+
+      function animate() {
+        rotation += speed;
+        speed *= 0.985;
+        drawWheel();
+        if (speed > 0.002) {
+          requestAnimationFrame(animate);
+        } else {
+          isSpinning = false;
+          showResult();
+        }
+      }
+
+      animate();
+    }
+
+    function showResult() {
+      const anglePer = 2 * Math.PI / items.length;
+      
+      const adjustedRotation = (rotation % (2 * Math.PI));
+      const pointerAngle = (3 * Math.PI / 2 - adjustedRotation + 2 * Math.PI) % (2 * Math.PI);
+
+      const index = Math.floor(pointerAngle / anglePer) % items.length;
+      document.getElementById("result").innerText = `🎉 결과: ${items[index]}`;
+    }
+
+    function resetWheel() {
+      rotation = 0;
+      speed = 0;
+      drawWheel();
+      document.getElementById("result").innerText = "";
+    }
+
+    drawWheel();
+  </script>
+
+</body>
+</html>

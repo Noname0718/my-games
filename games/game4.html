@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>OX 퀴즈 게임</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      padding: 50px;
+      background-color: #f8f8f8;
+    }
+    .quiz-box {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      display: inline-block;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .question {
+      font-size: 24px;
+      margin-bottom: 30px;
+    }
+    button {
+      font-size: 18px;
+      padding: 12px 25px;
+      margin: 10px;
+      cursor: pointer;
+    }
+    #answer {
+      margin-top: 20px;
+      font-weight: bold;
+      font-size: 20px;
+      color: darkblue;
+      white-space: pre-line;
+    }
+    #home-btn {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 10px 16px;
+        background-color: #eee;
+        color: black;
+        text-decoration: none;
+        border-radius: 8px;
+        font-size: 16px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        transition: background-color 0.2s;
+    }
+    #home-btn:hover {
+        background-color: #ccc;
+    }
+  </style>
+</head>
+<body>
+  <h1>⭕❌ OX 퀴즈 게임</h1>
+  <div class="quiz-box">
+    <div id="question" class="question">문제: 지구는 평평하다.</div>
+    <div id="answer"></div>
+    <button onclick="showAnswer()">정답 확인</button>
+    <button onclick="nextQuestion()">다음 문제</button>
+  </div>
+  <a id="home-btn" href="../index.html">🏠 홈으로</a>
+
+    <script>
+        let quizData = [];
+        let quizPool = [];
+        let currentIndex = 0;
+
+        // 문제 섞기 함수
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function nextQuestion() {
+            if (currentIndex >= quizPool.length) {
+            document.getElementById("question").innerText = "🎉 모든 문제를 풀었습니다!";
+            document.getElementById("answer").innerText = "";
+            return;
+            }
+
+            const q = quizPool[currentIndex];
+            document.getElementById("question").innerText = "문제: " + q.question;
+            document.getElementById("answer").innerText = "";
+            currentIndex++;
+        }
+
+        function showAnswer() {
+            const q = quizPool[currentIndex - 1];
+            document.getElementById("answer").innerText = `정답: ${q.answer}\n해설: ${q.explanation}`;
+        }
+
+        // JSON 불러오기
+        fetch("quiz.json")
+            .then(res => res.json())
+            .then(data => {
+            quizData = data;
+            quizPool = shuffle([...quizData]);
+            nextQuestion();
+            })
+            .catch(err => {
+            document.getElementById("question").innerText = "❌ 문제를 불러오지 못했습니다.";
+            console.error("퀴즈 로딩 오류:", err);
+            });
+    </script>
+
+</body>
+</html>
