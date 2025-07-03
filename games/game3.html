@@ -1,4 +1,3 @@
-<!-- games/person.html -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -30,69 +29,92 @@
       font-size: 16px;
       cursor: pointer;
     }
-    #answer {
+    #answer, #hint {
       margin-top: 15px;
-      font-size: 30px;
+      font-size: 24px;
       font-weight: bold;
       color: darkblue;
     }
     #home-btn {
-        position: fixed;
-        top: 20px;
-        left: 20px;
-        padding: 10px 16px;
-        background-color: #eee;
-        color: black;
-        text-decoration: none;
-        border-radius: 8px;
-        font-size: 16px;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-        transition: background-color 0.2s;
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      padding: 10px 16px;
+      background-color: #eee;
+      color: black;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 16px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      transition: background-color 0.2s;
     }
-
     #home-btn:hover {
-        background-color: #ccc;
+      background-color: #ccc;
     }
-
   </style>
 </head>
 <body>
   <h1>🧠 인물 맞추기 게임</h1>
   <div class="game-box">
-    <img id="person-img" src="images/person1.jpg" alt="인물 이미지">
+    <img id="person-img" src="" alt="인물 이미지">
     <div>
+      <button onclick="showHint()">힌트 보기</button>
       <button onclick="showAnswer()">정답 보기</button>
       <button onclick="nextQuestion()">다음 문제</button>
     </div>
+    <div id="hint"></div>
     <div id="answer"></div>
   </div>
   <a id="home-btn" href="../index.html">🏠 홈으로</a>
+
   <script>
-    const people = [
-      { img: "images/person1.jpg", name: "지민" },
-      { img: "images/person2.jpg", name: "손흥민" },
-      { img: "images/person3.jpg", name: "백종원" },
-      { img: "images/person4.jpg", name: "유재석" },
-      { img: "images/person5.jpg", name: "아이유" }
-    ];
+    let people = [];
+    let quizQueue = [];
+    let currentPerson = null;
 
-    let currentIndex = -1;
+    // JSON 데이터 로드 및 초기화
+    fetch('people.json')
+      .then(res => res.json())
+      .then(data => {
+        people = data;
+        shuffleAndInit();
+        nextQuestion();
+      })
+      .catch(err => console.error('JSON 로딩 에러:', err));
 
+    // 배열 셔플 함수
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    // 초기화 및 문제 섞기
+    function shuffleAndInit() {
+      quizQueue = shuffleArray([...people]);
+    }
+
+    // 다음 문제 표시
     function nextQuestion() {
-      const random = Math.floor(Math.random() * people.length);
-      currentIndex = random;
-      document.getElementById("person-img").src = people[random].img;
-      document.getElementById("answer").innerText = "";
+      if (quizQueue.length === 0) {
+        shuffleAndInit();
+        alert("모든 문제를 다 풀었습니다! 다시 섞어서 시작합니다.");
+      }
+      currentPerson = quizQueue.pop();
+      document.getElementById('person-img').src = currentPerson.img;
+      document.getElementById('answer').innerText = "";
+      document.getElementById('hint').innerText = "";
     }
 
     function showAnswer() {
-      if (currentIndex >= 0) {
-        document.getElementById("answer").innerText = `정답: ${people[currentIndex].name}`;
-      }
+      document.getElementById('answer').innerText = `정답: ${currentPerson.name}`;
     }
 
-    // 첫 문제 자동 시작
-    window.onload = nextQuestion;
+    function showHint() {
+      document.getElementById('hint').innerText = `힌트: ${currentPerson.hint}`;
+    }
   </script>
 </body>
 </html>
