@@ -37,3 +37,38 @@ ul li a:hover{
 li.spaced{
     margin-top :5%;
 }
+/* 반응형 대응: 화면 너비가 600px 이하일 때 */
+@media (max-width: 600px) {
+  body {
+    padding: 20px;
+  }
+
+  .game-box {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  img {
+    width: 100%;
+    height: auto;
+  }
+
+  button {
+    display: block;
+    width: 90%;
+    max-width: 300px;
+    margin: 10px auto;
+    font-size: 16px;
+  }
+
+  #score, #timer {
+    font-size: 20px;
+  }
+
+  #home-btn {
+    top: 10px;
+    left: 10px;
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+}
