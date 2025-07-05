@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>이미지로 맞히기 게임</title>
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      padding: 50px;
+      background-color: #f0f0f0;
+    }
+    .game-box {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      display: inline-block;
+    }
+    img {
+      width: 100%;
+      height: auto;
+      max-width: 300px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+    .button-row {
+      margin: 20px 0;
+    }
+    .button-row button {
+      padding: 10px 20px;
+      margin: 0 10px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    #hint, #answer {
+      margin-top: 10px;
+      font-size: 20px;
+      font-weight: bold;
+      color: darkblue;
+    }
+    #home-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      padding: 10px 16px;
+      background-color: #eee;
+      color: black;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 16px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      transition: background-color 0.2s;
+    }
+    #home-btn:hover {
+      background-color: #ccc;
+    }
+  </style>
+</head>
+
+<body>
+  <a id="home-btn" href="../index.html">🏠 홈으로</a>
+  <h1>이미지 맞추기 게임</h1>
+
+  <div>
+    <button onclick="loadCategory('e_people')">인물</button>
+    <button onclick="loadCategory('e_praise')">찬양</button>
+  </div>
+
+  <div id="game-container" class="game-box" style="display:none;">
+    <img id="quiz-image" src="" alt="문제 이미지">
+    
+    <p id="hint" style="display:none;"></p>
+    <p id="answer" style="display:none;"></p>
+
+    <div class="button-row">
+      <button onclick="showHint()">힌트 보기</button>
+      <button onclick="showAnswer()">정답 확인</button>
+      <button onclick="nextQuestion()">다음 문제</button>
+    </div>
+  </div>
+
+  <script>
+    let questions = [];
+    let currentIndex = 0;
+
+    async function loadCategory(category) {
+      const res = await fetch(`${category}.json`);
+      questions = await res.json();
+      currentIndex = 0;
+      document.getElementById('game-container').style.display = 'block';
+      showQuestion();
+    }
+
+    function showQuestion() {
+      const q = questions[currentIndex];
+      document.getElementById('quiz-image').src = q.image;
+      document.getElementById('hint').style.display = 'none';
+      document.getElementById('hint').innerText = q.hint;
+      document.getElementById('answer').style.display = 'none';
+      document.getElementById('answer').innerText = q.answer;
+    }
+
+    function showHint() {
+      document.getElementById('hint').style.display = 'block';
+    }
+
+    function showAnswer() {
+      document.getElementById('answer').style.display = 'block';
+    }
+
+    function nextQuestion() {
+      currentIndex = (currentIndex + 1) % questions.length;
+      showQuestion();
+    }
+  </script>
+</body>
+</html>

@@ -25,7 +25,7 @@
     }
     button {
       padding: 10px 20px;
-      margin: 10px;
+      margin: 10px 5px;
       font-size: 16px;
       cursor: pointer;
     }
@@ -34,6 +34,12 @@
       font-size: 24px;
       font-weight: bold;
       color: darkblue;
+    }
+    #timer {
+      margin-top: 20px;
+      font-size: 28px;
+      font-weight: bold;
+      color: darkred;
     }
     #home-btn {
       position: fixed;
@@ -56,23 +62,45 @@
 <body>
   <h1>🧠 인물 맞추기 게임</h1>
   <div class="game-box">
-    <img id="person-img" src="" alt="인물 이미지">
-    <div>
-      <button onclick="showHint()">힌트 보기</button>
-      <button onclick="showAnswer()">정답 보기</button>
-      <button onclick="nextQuestion()">다음 문제</button>
+    <!-- 게임 전체 묶음 (처음엔 숨김) -->
+    <div id="game-section" class="game-box" style="display:none;">
+      <img id="person-img" src="" alt="인물 이미지">
+
+      <div>
+        <button onclick="showHint()">힌트 보기</button>
+        <button onclick="showAnswer()">정답 보기</button>
+        <button onclick="nextQuestion()">다음 문제</button>
+      </div>
+
+      <div id="hint"></div>
+      <div id="answer"></div>
+
+      <div id="score" style="margin-top: 20px; font-size: 24px; font-weight: bold; color: green;">점수: 0</div>
     </div>
-    <div id="hint"></div>
-    <div id="answer"></div>
+
+    <!-- 타이머 입력 및 출력 -->
+    <div style="margin-top: 30px;">
+      <label for="minute-input">⏱ 시간 설정 (분): </label>
+      <input type="number" id="minute-input" value="1.5" step="0.1" min="0.1" style="width:80px;">
+    </div>
+    <div id="timer">남은 시간: 00:00</div>
+    <div>
+      <button onclick="startTimer()">시작</button>
+      <button onclick="stopTimer()">중지/시작</button>
+      <button onclick="resetTimer()">초기화</button>
+    </div>
   </div>
+
   <a id="home-btn" href="../index.html">🏠 홈으로</a>
 
   <script>
     let people = [];
     let quizQueue = [];
     let currentPerson = null;
+    let score = 0;
+    let gameStarted = false;
+    let isPaused = false;
 
-    // JSON 데이터 로드 및 초기화
     fetch('people.json')
       .then(res => res.json())
       .then(data => {
@@ -82,7 +110,6 @@
       })
       .catch(err => console.error('JSON 로딩 에러:', err));
 
-    // 배열 셔플 함수
     function shuffleArray(array) {
       for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -91,12 +118,10 @@
       return array;
     }
 
-    // 초기화 및 문제 섞기
     function shuffleAndInit() {
       quizQueue = shuffleArray([...people]);
     }
 
-    // 다음 문제 표시
     function nextQuestion() {
       if (quizQueue.length === 0) {
         shuffleAndInit();
@@ -115,6 +140,109 @@
     function showHint() {
       document.getElementById('hint').innerText = `힌트: ${currentPerson.hint}`;
     }
+
+    //점수 관련
+    function updateScoreDisplay() {
+      document.getElementById('score').innerText = `점수: ${score}`;
+    }
+
+    function nextQuestion() {
+      if (quizQueue.length === 0) {
+        shuffleAndInit();
+        alert("모든 문제를 다 풀었습니다! 다시 섞어서 시작합니다.");
+      }
+      currentPerson = quizQueue.pop();
+      document.getElementById('person-img').src = currentPerson.img;
+      document.getElementById('answer').innerText = "";
+      document.getElementById('hint').innerText = "";
+
+      // 점수 1 증가
+      score++;
+      updateScoreDisplay();
+    }
+
+    // 🕒 타이머 관련
+    let timer = null;
+    let timeLeft = 0; // 초 단위
+
+    function updateTimerDisplay() {
+      const minutes = String(Math.floor(timeLeft / 60)).padStart(2, '0');
+      const seconds = String(timeLeft % 60).padStart(2, '0');
+      document.getElementById('timer').innerText = `남은 시간: ${minutes}:${seconds}`;
+    }
+
+    function startTimer() {
+      if (!gameStarted) {
+        gameStarted = true;
+
+        // 게임 시작 시점에 문제 영역 보이기 + 초기화
+        document.getElementById('game-section').style.display = 'block';
+        score = 0;
+        updateScoreDisplay();
+        nextQuestion();
+      }
+
+      if (timer) return;
+
+      if (timeLeft <= 0) {
+        const input = parseFloat(document.getElementById('minute-input').value);
+        if (isNaN(input) || input <= 0) {
+          alert("0보다 큰 숫자를 입력해주세요.");
+          return;
+        }
+        const minutes = Math.floor(input);
+        const seconds = Math.round((input - minutes) * 60);
+        timeLeft = minutes * 60 + seconds;
+      }
+
+      timer = setInterval(() => {
+        if (timeLeft > 0) {
+          timeLeft--;
+          updateTimerDisplay();
+        } else {
+          clearInterval(timer);
+          timer = null;
+          alert("⏰ 시간이 종료되었습니다!");
+        }
+      }, 1000);
+
+      updateTimerDisplay();
+    }
+
+    function stopTimer() {
+      if (timer) {
+        // 정지
+        clearInterval(timer);
+        timer = null;
+        isPaused = true;
+      } else if (isPaused && timeLeft > 0) {
+        // 다시 시작
+        timer = setInterval(() => {
+          if (timeLeft > 0) {
+            timeLeft--;
+            updateTimerDisplay();
+          } else {
+            clearInterval(timer);
+            timer = null;
+            isPaused = false;
+            alert("⏰ 시간이 종료되었습니다!");
+          }
+        }, 1000);
+        isPaused = false;
+      }
+    }
+
+    function resetTimer() {
+      stopTimer();
+      timeLeft = 0;
+      isPaused = false;
+      updateTimerDisplay();
+
+      // 점수도 초기화
+      score = 0;
+      updateScoreDisplay();
+    }
+
   </script>
 </body>
 </html>
