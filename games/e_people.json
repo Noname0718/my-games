@@ -1,37 +1,112 @@
 [
    {
     "image": "images/e_다니엘.jpg",
-    "hint": "맨유에서 활약한 한국 축구선수",
+    "hint": "하루 세번 기도",
     "answer": "다니엘"
   },
   {
     "image": "images/e_아담과하와.jpg",
-    "hint": "임진왜란 시기의 장군",
+    "hint": "선악과",
     "answer": "아담과 하와"
   },
   {
     "image": "images/e_아브라함.jpg",
-    "hint": "임진왜란 시기의 장군",
+    "hint": "믿음의 조상",
     "answer": "아브라함"
   },
   {
     "image": "images/e_요나.jpg",
-    "hint": "임진왜란 시기의 장군",
+    "hint": "순종하지 않은 예언자",
     "answer": "요나"
   },
   {
     "image": "images/e_다윗.jpg",
-    "hint": "임진왜란 시기의 장군",
+    "hint": "시편의 저자",
     "answer": "다윗"
   },
   {
     "image": "images/e_요셉.jpg",
-    "hint": "임진왜란 시기의 장군",
+    "hint": "꿈의 사람",
     "answer": "요셉"
   },
   {
     "image": "images/e_삼손.jpg",
-    "hint": "임진왜란 시기의 장군",
+    "hint": "힘의 상징",
     "answer": "삼손"
+  },
+  {
+    "image": "images/e_이삭.jpg",
+    "hint": "약속의 자녀",
+    "answer": "이삭"
+  },
+  {
+    "image": "images/e_솔로몬.jpg",
+    "hint": "지혜의 상징",
+    "answer": "솔로몬"
+  },
+  {
+    "image": "images/e_예수님.jpg",
+    "hint": "가나의 혼인잔치",
+    "answer": "예수님"
+  },
+  {
+    "image": "images/e_베드로.jpg",
+    "hint": "시몬",
+    "answer": "베드로"
+  },
+  {
+    "image": "images/e_바울.jpg",
+    "hint": "감옥에 갇힌 적이 많음",
+    "answer": "바울"
+  },
+  {
+    "image": "images/e_사무엘.jpg",
+    "hint": "한나",
+    "answer": "사무엘"
+  },
+  {
+    "image": "images/e_엘리아.jpg",
+    "hint": "구약성경의 예언자",
+    "answer": "엘리아"
+  },
+  {
+    "image": "images/e_기드온.jpg",
+    "hint": "사사기에 등장하는 이스라엘의 사사",
+    "answer": "기드온"
+  },
+  {
+    "image": "images/e_마리아.jpg",
+    "hint": "예수",
+    "answer": "마리아"
+  },
+  {
+    "image": "images/e_노아.jpg",
+    "hint": "40일 홍수",
+    "answer": "노아"
+  },
+  {
+    "image": "images/e_예레미야.jpg",
+    "hint": "눈물의 선지자",
+    "answer": "예레미야"
+  },
+  {
+    "image": "images/e_이사야.jpg",
+    "hint": "구원자의 오신, 고난받는 종, 새 하늘과 새 땅",
+    "answer": "이사야"
+  },
+  {
+    "image": "images/e_하박국.jpg",
+    "hint": "왜 악인이 득세하고, 의인은 고 난받는가?",
+    "answer": "하박국"
+  },
+  {
+    "image": "images/e_삭개오.jpg",
+    "hint": "키가 매우 작은 인물",
+    "answer": "삭개오"
+  },
+  {
+    "image": "images/e_한나.jpg",
+    "hint": "사무엘",
+    "answer": "한나"
   }
 ]

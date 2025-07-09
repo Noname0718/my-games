@@ -61,7 +61,7 @@
 
 <body>
   <a id="home-btn" href="../index.html">🏠 홈으로</a>
-  <h1>이미지 맞추기 게임</h1>
+  <h1>이모지 맞추기 게임</h1>
 
   <div>
     <button onclick="loadCategory('e_people')">인물</button>
@@ -83,18 +83,28 @@
 
   <script>
     let questions = [];
+    let shuffledQuestions = [];
     let currentIndex = 0;
 
     async function loadCategory(category) {
       const res = await fetch(`${category}.json`);
       questions = await res.json();
+      shuffledQuestions = shuffleArray([...questions]); // 깊은 복사 후 셔플
       currentIndex = 0;
       document.getElementById('game-container').style.display = 'block';
       showQuestion();
     }
 
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
     function showQuestion() {
-      const q = questions[currentIndex];
+      const q = shuffledQuestions[currentIndex];
       document.getElementById('quiz-image').src = q.image;
       document.getElementById('hint').style.display = 'none';
       document.getElementById('hint').innerText = q.hint;
@@ -102,17 +112,23 @@
       document.getElementById('answer').innerText = q.answer;
     }
 
+    function nextQuestion() {
+      currentIndex++;
+      if (currentIndex >= shuffledQuestions.length) {
+        alert("모든 문제를 다 풀었습니다! 다시 섞어서 시작합니다.");
+        shuffledQuestions = shuffleArray([...questions]);
+        currentIndex = 0;
+      }
+      showQuestion();
+    }
+
+
     function showHint() {
       document.getElementById('hint').style.display = 'block';
     }
 
     function showAnswer() {
       document.getElementById('answer').style.display = 'block';
-    }
-
-    function nextQuestion() {
-      currentIndex = (currentIndex + 1) % questions.length;
-      showQuestion();
     }
   </script>
 </body>
