@@ -1,42 +1,92 @@
 [
   {
     "image": "images/e_BecauseOfYou.jpg",
-    "hint": "맨유에서 활약한 한국 축구선수",
+    "hint": "너 때문에",
     "answer": "Because Of You"
   },
   {
     "image": "images/e_빛으로비추시네.jpg",
-    "hint": "임진왜란 시기의 장군",
+    "hint": "주의 선하신과 진실함을 닮기 원하네",
     "answer": "빛으로비추시네"
   },
   {
     "image": "images/e_SingSingSing.jpg",
-    "hint": "임진왜란 시기의 장군",
+    "hint": "노래",
     "answer": "Sing Sing Sing"
   },
   {
     "image": "images/e_성령이불타는교회.jpg",
-    "hint": "임진왜란 시기의 장군",
+    "hint": "성령이...",
     "answer": "설령이 불타는 교회"
   },
   {
     "image": "images/e_주발앞에나엎드려.jpg",
-    "hint": "임진왜란 시기의 장군",
+    "hint": "오직! 예수! 주님만이 나의 삶의 이유",
     "answer": "주발 앞에 나 엎드려"
   },
   {
     "image": "images/e_주의자비가내려와.jpg",
-    "hint": "임진왜란 시기의 장군",
+    "hint": "Hey Ho 주의 자비하심과..",
     "answer": "주의 자비가 내려와"
   },
   {
     "image": "images/e_원하고바라고기도합니다.jpg",
-    "hint": "임진왜란 시기의 장군",
+    "hint": "이 세상을 살아가는 동안에",
     "answer": "원하고 바라고 기도합니다."
   },
   {
     "image": "images/e_푯대를향하여.jpg",
-    "hint": "임진왜란 시기의 장군",
+    "hint": "",
     "answer": "푯대를 향하여"
+  },
+  {
+    "image": "images/e_무화과나뭇잎이.jpg",
+    "hint": "난 여호와로 즐거워하리",
+    "answer": "무화과 나뭇잎이"
+  },
+  {
+    "image": "images/e_그사랑.jpg",
+    "hint": "아버지 사랑 ",
+    "answer": "그사랑"
+  },
+  {
+    "image": "images/e_멈출수없네.jpg",
+    "hint": "아멘! 기쁨의!",
+    "answer": "멈출 수 없네"
+  },
+  {
+    "image": "images/e_축복의통로.jpg",
+    "hint": "당신은 하나님의 ~",
+    "answer": "축복의 통로"
+  },
+  {
+    "image": "images/e_감사함으로.jpg",
+    "hint": "여호와를 즐거이불러~",
+    "answer": "감사함으로"
+  },
+  {
+    "image": "images/e_어둔날다지나고.jpg",
+    "hint": "우리가는 이 길 세상이 미련하다 해도",
+    "answer": "어둔날 다 지나고"
+  },
+  {
+    "image": "images/e_나의가는길.jpg",
+    "hint": "주 나의 인도자 항상 함께하시네",
+    "answer": "나의가는길"
+  },
+  {
+    "image": "images/e_나는찬양하리라.jpg",
+    "hint": "나는 영광돌리리 주님 영광의 이름",
+    "answer": "나는찬양하리라"
+  },
+  {
+    "image": "images/e_주를찾는모든자들이.jpg",
+    "hint": "주는 나의 도움 나를 건지시는 이",
+    "answer": "주를찾는모든자들이"
+  },
+  {
+    "image": "images/e_이시간너의맘속에.jpg",
+    "hint": "오래전부터 널 위해 준비된",
+    "answer": "이 시간 너의 맘속에"
   }
 ]
