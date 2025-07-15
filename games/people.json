@@ -21,7 +21,6 @@
   {"img":"./images/허준.jpg","name":"허준","hint":"<동의보감>을 저술한 조선 시대 의원."},
   {"img":"./images/김종국.jpg","name":"김종국","hint":"터보 출신의 가수이자 방송인으로 '능력자'라는 별명이 있다."},
   {"img":"./images/신세경.jpg","name":"신세경","hint":"드라마 <뿌리 깊은 나무>, <육룡이 나르샤>에 출연한 배우."},
-  {"img":"./images/차범근.jpg","name":"차범근","hint":"분데스리가에서 활약한 전설적인 축구 선수."},
   {"img":"./images/서장훈.jpg","name":"서장훈","hint":"전직 농구 선수이자 방송인으로 예능에서 활약 중."},
   {"img":"./images/박나래.jpg","name":"박나래","hint":"코미디언이자 방송인으로, 개성 넘치는 캐릭터로 인기."},
   {"img":"./images/김희철.jpg","name":"김희철","hint":"슈퍼주니어의 멤버로 다양한 예능에서 활동."},
@@ -73,5 +72,13 @@
   {"img":"./images/영케이.jpg","name":"영케이","hint":"데이식스의 멤버"},
   {"img":"./images/성진.jpg","name":"성진","hint":"데이식스의 멤버"},
   {"img":"./images/도운.jpg","name":"도운","hint":"데이식스의 멤버"},
-  {"img":"./images/원필.jpg","name":"원필","hint":"데이식스의 멤버"}
+  {"img":"./images/원필.jpg","name":"원필","hint":"데이식스의 멤버"},
+  {"img":"./images/지효.jpg","name":"지효","hint":"트와이스의 멤버"},
+  {"img":"./images/사나.jpg","name":"사나","hint":"트와이스의 멤버"},
+  {"img":"./images/모모.jpg","name":"모모","hint":"트와이스의 멤버"},
+  {"img":"./images/나연.jpg","name":"나연","hint":"트와이스의 멤버"},
+  {"img":"./images/정국.jpg","name":"정국","hint":"방탄소년단의 멤버"},
+  {"img":"./images/진.jpg","name":"진","hint":"방탄소년단의 멤버"},
+  {"img":"./images/rm.jpg","name":"rm","hint":"방탄소년단의 멤버"},
+  {"img":"./images/뷔.jpg","name":"뷔","hint":"방탄소년단의 멤버"}
 ]
